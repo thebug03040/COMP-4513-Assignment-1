@@ -35,33 +35,35 @@ function normalizeLimit(ref) {
 app.get('/api/artists', async (req, res) => {
     try {
         const rows = await db.all(`
-        SELECT artists.*, types.type_name
-        FROM artists
-        JOIN types ON artist.type_id = types.type_id
-        ORDER BY artist_name
+            SELECT artists.*, types.type_name
+            FROM artists
+            JOIN types ON artists.artist_type_id = types.type_id
+            ORDER BY artist_name
         `);
 
         res.json(rows);
     } catch (err) {
+        console.error(err); // <-- add this so you can see real errors
         res.status(500).json({ error: 'Internal server error.' });
     }
 });
 
-// Getting /api/artists/:id
+
 app.get('/api/artists/:id', async (req, res) => {
     const { id } = req.params;
 
     const row = await db.get(`
-    SELECT artists.*, types.type_name
-    FROM artists
-    JOIN types ON artist.type_id = types.type_id
-    WHERE artist_id = ?
+        SELECT artists.*, types.type_name
+        FROM artists
+        JOIN types ON artists.artist_type_id = types.type_id
+        WHERE artist_id = ?
     `, id);
 
     if (!row) return res.json({ error: 'No data found.' });
 
     res.json(row);
 });
+
 
 // Getting /api/artists/averages/:id
 app.get('/api/artists/averages/:id', async (req, res) => {
@@ -120,7 +122,7 @@ app.get('/api/songs/sort/:order', async (req, res) => {
   res.json(rows);
 });
 
-// Getting /api/songs:id
+// Getting /api/songs/:id
 app.get('/api/songs/:id', async (req, res) => {
   const { id } = req.params;
 
@@ -196,25 +198,32 @@ app.get('/api/songs/genre/:id', async (req, res) => {
 app.get('/api/playlists/:id', async (req, res) => {
   const { id } = req.params;
 
-  const rows = await db.all(`
-    SELECT playlists.playlist_name AS playlist,
-           songs.song_id,
-           songs.title,
-           artists.artist_name,
-           genres.genre_name,
-           songs.year
-    FROM playlist_songs
-    JOIN playlists ON playlist_songs.playlist_id = playlists.playlist_id
-    JOIN songs ON playlist_songs.song_id = songs.song_id
-    JOIN artists ON songs.artist_id = artists.artist_id
-    JOIN genres ON songs.genre_id = genres.genre_id
-    WHERE playlists.playlist_id = ?
-  `, id);
+  try {
+    const rows = await db.all(`
+      SELECT 
+        playlists.playlist_id AS playlist_id,
+        songs.song_id,
+        songs.title,
+        artists.artist_name,
+        genres.genre_name,
+        songs.year
+      FROM playlists
+      JOIN songs ON playlists.song_id = songs.song_id
+      JOIN artists ON songs.artist_id = artists.artist_id
+      JOIN genres ON songs.genre_id = genres.genre_id
+      WHERE playlists.playlist_id = ?
+    `, id);
 
-  if (rows.length === 0) return res.json({ error: 'Requested resource did not return any data.' });
+    if (rows.length === 0)
+      return res.json({ error: 'Requested resource did not return any data.' });
 
-  res.json(rows);
+    res.json(rows);
+  } catch (err) {
+    console.error("Playlist error:", err);
+    res.status(500).json({ error: 'Internal server error.' });
+  }
 });
+
 
 // Getting /api/mood/dancing/:ref
 app.get('/api/mood/dancing/:ref', async (req, res) => {
