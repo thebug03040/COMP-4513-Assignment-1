@@ -151,6 +151,17 @@ app.get('/api/songs/search/any/:substring', async (req, res) => {
   res.json(rows);
 });
 
+// Getting /api/songs/search/year/:year
+app.get('/api/songs/search/year/:year', async (req, res) => {
+  const { year } = req.params;
+
+  const rows = await db.all(`${SONG_JOIN} WHERE songs.year = ?`, year);
+
+  if (rows.length === 0) return res.json({ error: 'Requested resource did not return any data.' });
+
+  res.json(rows);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
