@@ -112,6 +112,17 @@ app.get('/api/songs/sort/:order', async (req, res) => {
   res.json(rows);
 });
 
+// Getting /api/songs:id
+app.get('/api/songs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const row = await db.get(`${SONG_JOIN} WHERE songs.song_id = ?`, id);
+
+  if (!row) return res.json({ error: 'Requested resource did not return any data.' });
+
+  res.json(row);
+});
+
 
 
 app.listen(PORT, () => {
