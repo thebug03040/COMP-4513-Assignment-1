@@ -240,6 +240,18 @@ app.get('/api/mood/happy/:ref?', async (req, res) => {
   res.json(rows);
 });
 
+// Geting /api/mood/coffee/:ref?
+app.get('/api/mood/coffee/:ref?', async (req, res) => {
+  const limit = normalizeLimit(req.params.ref);
+
+  const rows = await db.all(
+    `${SONG_JOIN} ORDER BY (liveness / acousticness) DESC LIMIT ?`,
+    limit
+  );
+
+  res.json(rows);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
