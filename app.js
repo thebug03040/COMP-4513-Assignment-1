@@ -264,6 +264,16 @@ app.get('/api/mood/studying/:ref?', async (req, res) => {
   res.json(rows);
 });
 
+// Adding error catcher for non-existant links:
+app.use('/api/*', (req, res) => { 
+    res.status(404).json({ error: 'API endpoint not found.' }); 
+});
+
+// General error handler
+app.use((err, req, res, next) => { 
+    console.error(err); 
+    res.status(500).json({ error: 'Internal server error.' });
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
