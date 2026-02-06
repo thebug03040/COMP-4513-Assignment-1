@@ -184,6 +184,30 @@ app.get('/api/songs/genre/:id', async (req, res) => {
   res.json(rows);
 });
 
+// Getting /api/playlists/:id
+app.get('/api/playlists/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const rows = await db.all(`
+    SELECT playlists.playlist_name AS playlist,
+           songs.song_id,
+           songs.title,
+           artists.artist_name,
+           genres.genre_name,
+           songs.year
+    FROM playlist_songs
+    JOIN playlists ON playlist_songs.playlist_id = playlists.playlist_id
+    JOIN songs ON playlist_songs.song_id = songs.song_id
+    JOIN artists ON songs.artist_id = artists.artist_id
+    JOIN genres ON songs.genre_id = genres.genre_id
+    WHERE playlists.playlist_id = ?
+  `, id);
+
+  if (rows.length === 0) return res.json({ error: 'Requested resource did not return any data.' });
+
+  res.json(rows);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
