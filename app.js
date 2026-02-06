@@ -69,6 +69,14 @@ app.get('/api/artists/averages/:id', async (req, res) => {
   res.json(row);
 });
 
+// Getting /api/genres
+app.get('/api/genres', async (req, res) => {
+  const rows = await db.all('SELECT * FROM genres');
+  res.json(rows);
+});
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
