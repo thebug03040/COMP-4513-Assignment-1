@@ -8,6 +8,5 @@ export async function getDB() {
         filename: './data/songs-2026.db',
         driver: sqlite3.Database
     });
-    test
 }
 
