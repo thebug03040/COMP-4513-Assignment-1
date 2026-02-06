@@ -43,6 +43,19 @@ app.get('/api/artists/:id', async (req, res) => {
     res.json(row);
 });
 
+// helper for obtaining various songs
+const SONG_JOIN = `
+  SELECT songs.*, 
+         artists.artist_id AS artist_id,
+         artists.artist_name AS artist_name,
+         genres.genre_id AS genre_id,
+         genres.genre_name AS genre_name
+  FROM songs
+  JOIN artists ON songs.artist_id = artists.artist_id
+  JOIN genres ON songs.genre_id = genres.genre_id
+`;
+
+
 // Getting /api/artists/averages/:id
 app.get('/api/artists/averages/:id', async (req, res) => {
   const { id } = req.params;
