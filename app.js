@@ -93,6 +93,26 @@ app.get('/api/songs', async (req, res) => {
   res.json(rows);
 });
 
+// Getting /api/songs/sort:order
+app.get('/api/songs/sort/:order', async (req, res) => {
+  const { order } = req.params;
+
+  const map = {
+    id: 'songs.song_id',
+    title: 'songs.title',
+    artist: 'artists.artist_name',
+    genre: 'genres.genre_name',
+    year: 'songs.year',
+    duration: 'songs.duration'
+  };
+
+  if (!map[order]) return res.json({ error: 'Invalid sort field.' });
+
+  const rows = await db.all(`${SONG_JOIN} ORDER BY ${map[order]}`);
+  res.json(rows);
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
