@@ -37,7 +37,7 @@ app.get('/api/artists', async (req, res) => {
         const rows = await db.all(`
         SELECT artists.*, types.type_name
         FROM artists
-        JOIN types ON artists.type_id = types.type_id
+        JOIN types ON artist.type_id = types.type_id
         ORDER BY artist_name
         `);
 
@@ -54,7 +54,7 @@ app.get('/api/artists/:id', async (req, res) => {
     const row = await db.get(`
     SELECT artists.*, types.type_name
     FROM artists
-    JOIN types ON artists.type_id = types.type_id
+    JOIN types ON artist.type_id = types.type_id
     WHERE artist_id = ?
     `, id);
 
@@ -265,9 +265,11 @@ app.get('/api/mood/studying/:ref', async (req, res) => {
 });
 
 // Adding error catcher for non-existant links:
-app.use('/api/*', (req, res) => { 
-    res.status(404).json({ error: 'API endpoint not found.' }); 
+// Catch-all for unknown API routes
+app.use(/^\/api\//, (req, res) => {
+  res.status(404).json({ error: 'API endpoint not found.' });
 });
+
 
 // General error handler
 app.use((err, req, res, next) => { 
