@@ -123,6 +123,19 @@ app.get('/api/songs/:id', async (req, res) => {
   res.json(row);
 });
 
+// Getting /api/songs/search/begin/:substring
+app.get('/api/songs/search/begin/:substring', async (req, res) => {
+  const { substring } = req.params;
+
+  const rows = await db.all(
+    `${SONG_JOIN} WHERE LOWER(title) LIKE LOWER(?) || '%'`,
+    substring
+  );
+
+  if (rows.length === 0) return res.json({ error: 'Requested resource did not return any data.' });
+
+  res.json(rows);
+});
 
 
 app.listen(PORT, () => {
