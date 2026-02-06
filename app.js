@@ -22,6 +22,14 @@ const SONG_JOIN = `
   JOIN genres ON songs.genre_id = genres.genre_id
 `;
 
+//Helper for getting mood routes
+function normalizeLimit(ref) {
+    const n = parseInt(ref);
+    if (!n || n < 1 || n > 20)
+        return 20;
+    return n;
+}
+
 // Getting /api/artists
 
 app.get('/api/artists', async (req, res) => {
@@ -208,6 +216,7 @@ app.get('/api/playlists/:id', async (req, res) => {
   res.json(rows);
 });
 
+//
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
