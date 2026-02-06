@@ -173,6 +173,17 @@ app.get('/api/songs/artist/:id', async (req, res) => {
   res.json(rows);
 });
 
+// Getting /api/songs/genre/:id
+app.get('/api/songs/genre/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const rows = await db.all(`${SONG_JOIN} WHERE songs.genre_id = ?`, id);
+
+  if (rows.length === 0) return res.json({ error: 'Requested resource did not return any data.' });
+
+  res.json(rows);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
