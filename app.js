@@ -216,7 +216,18 @@ app.get('/api/playlists/:id', async (req, res) => {
   res.json(rows);
 });
 
-//
+// Getting /api/mood/dancing/:ref?
+app.get('/api/mood/dancing/:ref?', async (req, res) => {
+  const limit = normalizeLimit(req.params.ref);
+
+  const rows = await db.all(
+    `${SONG_JOIN} ORDER BY danceability DESC LIMIT ?`,
+    limit
+  );
+
+  res.json(rows);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
