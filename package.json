@@ -17,5 +17,13 @@
     "git": "^0.1.5",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebug03040/COMP-4513-Assignment-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thebug03040/COMP-4513-Assignment-1/issues"
+  },
+  "homepage": "https://github.com/thebug03040/COMP-4513-Assignment-1#readme"
 }
