@@ -216,8 +216,8 @@ app.get('/api/playlists/:id', async (req, res) => {
   res.json(rows);
 });
 
-// Getting /api/mood/dancing/:ref?
-app.get('/api/mood/dancing/:ref?', async (req, res) => {
+// Getting /api/mood/dancing/:ref
+app.get('/api/mood/dancing/:ref', async (req, res) => {
   const limit = normalizeLimit(req.params.ref);
 
   const rows = await db.all(
@@ -228,8 +228,8 @@ app.get('/api/mood/dancing/:ref?', async (req, res) => {
   res.json(rows);
 });
 
-// Getting /api/mood/happy/:ref?
-app.get('/api/mood/happy/:ref?', async (req, res) => {
+// Getting /api/mood/happy/:ref
+app.get('/api/mood/happy/:ref', async (req, res) => {
   const limit = normalizeLimit(req.params.ref);
 
   const rows = await db.all(
@@ -240,8 +240,8 @@ app.get('/api/mood/happy/:ref?', async (req, res) => {
   res.json(rows);
 });
 
-// Geting /api/mood/coffee/:ref?
-app.get('/api/mood/coffee/:ref?', async (req, res) => {
+// Geting /api/mood/coffee/:ref
+app.get('/api/mood/coffee/:ref', async (req, res) => {
   const limit = normalizeLimit(req.params.ref);
 
   const rows = await db.all(
@@ -252,8 +252,8 @@ app.get('/api/mood/coffee/:ref?', async (req, res) => {
   res.json(rows);
 });
 
-// Getting /api/mood/studying/:ref?
-app.get('/api/mood/studying/:ref?', async (req, res) => {
+// Getting /api/mood/studying/:ref
+app.get('/api/mood/studying/:ref', async (req, res) => {
   const limit = normalizeLimit(req.params.ref);
 
   const rows = await db.all(
