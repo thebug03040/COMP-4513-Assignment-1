@@ -275,10 +275,9 @@ app.get('/api/mood/studying/:ref', async (req, res) => {
 
 // Adding error catcher for non-existant links:
 // Catch-all for unknown API routes
-app.use(/^\/api\//, (req, res) => {
-  res.status(404).json({ error: 'API endpoint not found.' });
+app.use('/api', (req, res) => { 
+  res.status(404).json({ error: 'API endpoint not found.' }); 
 });
-
 
 // General error handler
 app.use((err, req, res, next) => { 
