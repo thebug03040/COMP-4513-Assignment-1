@@ -69,5 +69,3 @@ The purpose of this project is to create an API that displays the contents of a 
 - [/api/mood/happy](https://comp-4513-assignment-1-lwc5.onrender.com/api/mood/happy)
 - [/api/mood/coffee/10](https://comp-4513-assignment-1-lwc5.onrender.com/api/mood/coffee/10)
 - [/api/mood/studying/15](https://comp-4513-assignment-1-lwc5.onrender.com/api/mood/studying/15)
-
-

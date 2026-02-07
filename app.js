@@ -31,7 +31,6 @@ function normalizeLimit(ref) {
 }
 
 // Getting /api/artists
-
 app.get('/api/artists', async (req, res) => {
     try {
         const rows = await db.all(`
@@ -48,7 +47,6 @@ app.get('/api/artists', async (req, res) => {
     }
 });
 
-
 app.get('/api/artists/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -63,7 +61,6 @@ app.get('/api/artists/:id', async (req, res) => {
 
     res.json(row);
 });
-
 
 // Getting /api/artists/averages/:id
 app.get('/api/artists/averages/:id', async (req, res) => {

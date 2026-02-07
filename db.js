@@ -9,4 +9,3 @@ export async function getDB() {
         driver: sqlite3.Database
     });
 }
-
