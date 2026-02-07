@@ -40,7 +40,7 @@ The purpose of this project is to create an API that displays the contents of a 
 | `app.js` | Contains the various API requests that may be made to the API. Also serves as the file that runs Node/Express |
 
 ## Test Links
-[/api/artists] (https://comp-4513-assignment-1-lwc5.onrender.com/api/artists)
+[/api/artists](https://comp-4513-assignment-1-lwc5.onrender.com/api/artists)
 /api/artists/129
 /api/artists/sdfjkhsdf
 /api/artists/averages/129
@@ -69,3 +69,4 @@ The purpose of this project is to create an API that displays the contents of a 
 /api/mood/happy
 /api/mood/coffee/10
 /api/mood/studying/15
+
