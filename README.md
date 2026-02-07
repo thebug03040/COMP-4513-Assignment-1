@@ -35,5 +35,7 @@ The purpose of this project is to create an API that displays the contents of a 
 
 ## Project Files
 | File | Description |
+| ---- | ----------- |
 | `db.js` | Serves as the function that allows the main file to run SQL commands |
 | `app.js` | Contains the various API requests that may be made to the API. Also serves as the file that runs Node/Express |
+
