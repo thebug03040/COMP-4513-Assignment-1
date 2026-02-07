@@ -273,16 +273,16 @@ app.get('/api/mood/studying/:ref', async (req, res) => {
   res.json(rows);
 });
 
-// Adding error catcher for non-existant links:
-// Catch-all for unknown API routes
-app.use('/api', (req, res) => { 
-  res.status(404).json({ error: 'API endpoint not found.' }); 
+// Catch-all for any /api/* route that wasn't matched above
+app.all('/api/*', (req, res) => {
+  res.status(404).json({ error: 'API endpoint not found.' });
 });
 
-// General error handler
+// General error handler (for thrown errors)
 app.use((err, req, res, next) => { 
-    console.error(err); 
-    res.status(500).json({ error: 'Internal server error.' });
+  console.error(err);
+  if (res.headersSent) return next(err);
+  res.status(500).json({ error: 'Internal server error.' });
 });
 
 app.listen(PORT, () => {
