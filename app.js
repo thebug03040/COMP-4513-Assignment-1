@@ -311,7 +311,7 @@ app.get('/api/mood/studying/:ref', async (req, res) => {
 
 
 // Catch-all for any /api/* route that wasn't matched above
-app.all('/api/*', (req, res) => {
+app.all(/^\/api\/.*/, (req, res) => {
   res.status(404).json({ error: 'API endpoint not found.' });
 });
 
