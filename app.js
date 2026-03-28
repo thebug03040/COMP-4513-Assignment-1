@@ -221,9 +221,18 @@ app.get('/api/playlists/:id', async (req, res) => {
   }
 });
 
+// Getting /api/mood/dancing
+app.get('/api/mood/dancing', async (req, res) => {
+  const limit = 20;
+  const rows = await db.all(
+    `${SONG_JOIN} ORDER BY danceability DESC LIMIT ?`,
+    limit
+  );
+  res.json(rows);
+});
 
 // Getting /api/mood/dancing/:ref
-app.get('/api/mood/dancing/:ref?', async (req, res) => {
+app.get('/api/mood/dancing/:ref', async (req, res) => {
   const limit = normalizeLimit(req.params.ref ?? '20');
   
   const rows = await db.all(
@@ -234,10 +243,19 @@ app.get('/api/mood/dancing/:ref?', async (req, res) => {
   res.json(rows);
 });
 
+// Getting /api/mood/happy
+app.get('/api/mood/happy', async (req, res) => {
+  
+  const rows = await db.all(
+    `${SONG_JOIN} ORDER BY valence DESC LIMIT 20`
+  );
+  
+  res.json(rows);
+});
 
 // Getting /api/mood/happy/:ref
-app.get('/api/mood/happy/:ref?', async (req, res) => {
-  const limit = normalizeLimit(req.params.ref ?? '20');
+app.get('/api/mood/happy/:ref', async (req, res) => {
+  const limit = normalizeLimit(req.params.ref);
   
   const rows = await db.all(
     `${SONG_JOIN} ORDER BY valence DESC LIMIT ?`,
@@ -247,27 +265,44 @@ app.get('/api/mood/happy/:ref?', async (req, res) => {
   res.json(rows);
 });
 
-
-
-// Geting /api/mood/coffee/:ref
-app.get('/api/mood/coffee/:ref?', async (req, res) => {
-  const limit = normalizeLimit(req.params.ref ?? '20');
+// Getting /api/mood/coffee
+app.get('/api/mood/coffee', async (req, res) => {
   
   const rows = await db.all(
-    `${SONG_JOIN} ORDER BY (liveness / acousticness) DESC LIMIT ?`,
+    `${SONG_JOIN} ORDER BY (liveness / acousticness) DESC LIMIT 20`
+  );
+  
+  res.json(rows);
+});
+
+// Getting /api/mood/coffee/:ref
+app.get('/api/mood/coffee/:ref', async (req, res) => {
+  const limit = normalizeLimit(req.params.ref);
+  
+  const rows = await db.all(
+    `${SONG_JOIN} ORDER BY (liveness / acousticness) DESC LIMIT ?`, 
     limit
   );
   
   res.json(rows);
 });
 
-
-// Getting /api/mood/studying/:ref
-app.get('/api/mood/studying/:ref?', async (req, res) => {
-  const limit = normalizeLimit(req.params.ref ?? '20');
+// Getting /api/mood/studying
+app.get('/api/mood/studying', async (req, res) => {
   
   const rows = await db.all(
-    `${SONG_JOIN} ORDER BY (energy * speechiness) ASC LIMIT ?`,
+    `${SONG_JOIN} ORDER BY (energy * speechiness) ASC LIMIT 20`
+  );
+  
+  res.json(rows);
+});
+
+// Getting /api/mood/studying/:ref
+app.get('/api/mood/studying/:ref', async (req, res) => {
+  const limit = normalizeLimit(req.params.ref);
+  
+  const rows = await db.all(
+    `${SONG_JOIN} ORDER BY (energy * speechiness) ASC LIMIT ?`, 
     limit
   );
   
