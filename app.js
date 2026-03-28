@@ -235,8 +235,8 @@ app.get('/api/mood/dancing/:ref', async (req, res) => {
 });
 
 // Getting /api/mood/happy/:ref
-app.get('/api/mood/happy/:ref', async (req, res) => {
-  const limit = normalizeLimit(req.params.ref);
+app.get('/api/mood/happy/:ref?', async (req, res) => {
+  const limit = normalizeLimit(req.params.ref ?? '20');
 
   const rows = await db.all(
     `${SONG_JOIN} ORDER BY valence DESC LIMIT ?`,
